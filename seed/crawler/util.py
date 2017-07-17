@@ -14,3 +14,7 @@ def search_str(expr_str, context):
     if re.search(expr_str, context):
         result = re.search(expr_str, context).group(1)
     return result
+
+
+def findall(exper_str, context):
+    return re.findall(exper_str, context, re.S | re.M)

@@ -10,9 +10,8 @@ import math
 import random
 
 from seed import models
-import re
 from web_crawler import web_content
-from util import search_str
+from util import search_str, findall
 
 
 class Result_Msg(object):
@@ -41,7 +40,7 @@ def movie_expression(context, censored_info):
 
     movies_url_tr = r'<a class="movie-box" href="(.*?)">'
 
-    movie_results = re.findall(movies_url_tr, context, re.S | re.M)
+    movie_results = findall(movies_url_tr, context)
     result_msg.total_count = len(movie_results)
     procced_count = 0
     for line in movie_results:
@@ -65,13 +64,14 @@ def detail_expression(detail_url):
     no_str = r'<p><span class="header">識別碼:</span> <span style="color:#CC0000;">(.*?)</span></p>'
     date_str = r'<p><span class="header">發行日期:</span> (.*?)</p>'
     length_str = r'<p><span class="header">長度:</span> (.*?)</p>'
-    director_str = r'<p><span class="header">導演:</span> <a href="https://www.seedmm.com/director/\w{1,16}">(.*?)</a></p>'
-    maker_str = r'<p><span class="header">製作商:</span> <a href="https://www.seedmm.com/studio/\w{1,16}">(.*?)</a></p>'
-    tag_str = r'<span class="genre"><a href="(https://www.seedmm.com.*?)">(.{1,16}?)</a></span>'
+    director_str = r'<p><span class="header">導演:</span> <a href="https://www.seedmm.com/director/\w{1,64}">(.*?)</a></p>'
+    maker_str = r'<p><span class="header">製作商:</span> <a href="https://www.seedmm.com/studio/\w{1,64}">(.*?)</a></p>'
+    series_str = r'<p><span class="header">系列:</span> <a href="(https://www.seedmm.com/series/\w{1,64}?)">(.*?)</a></p>'
+    tag_str = r'<span class="genre"><a href="(https://www.seedmm.com/.*?)">(.{1,64}?)</a></span>'
     if result_msg.uncensored == 'y':
-        actors_url_str = r'<a href="(https://www.seedmm.com/uncensored/star/\w+?)">(.{1,16}?)</a>'
+        actors_url_str = r'<a href="(https://www.seedmm.com/uncensored/star/\w+?)">(.{1,64}?)</a>'
     else:
-        actors_url_str = r'<a href="(https://www.seedmm.com/star/\w+?)">(.{1,16}?)</a>'
+        actors_url_str = r'<a href="(https://www.seedmm.com/star/\w+?)">(.|\.{1,64}?)</a>'
 
     gid_str = r'var gid = (.*?);'
     uc_str = r'var uc = (.*?);'
@@ -89,6 +89,17 @@ def detail_expression(detail_url):
     new_movie.img = search_str(img_str, detail_context)
     new_movie.uncensored = result_msg.uncensored
 
+    series_results = findall(series_str, detail_context)
+    for series_info in series_results:
+        series_list = models.Series.objects.filter(series_url=series_info[0], name=series_info[1])
+        if not series_list:
+            series = models.Series(series_url=series_info[0], name=series_info[1])
+            series.save()
+        else:
+            series = series_list.first()
+        print series
+        new_movie.series = series
+
     new_movie.save()
 
     message = "Movie: " + new_movie.no + " saved!"
@@ -98,12 +109,12 @@ def detail_expression(detail_url):
     # 根据Movie信息更新magnet表
     get_magnets(new_movie)
 
-    actors_results = re.findall(actors_url_str, detail_context, re.S | re.M)
+    actors_results = findall(actors_url_str, detail_context)
     for line in actors_results:
         new_actor = actor_expression(line[0], line[1])
         models.Movie_Actor(movie=new_movie, actor=new_actor).save()
 
-    tag_results = re.findall(tag_str, detail_context)
+    tag_results = findall(tag_str, detail_context)
     for line in tag_results:
         new_tag = tag_expression(line[0], line[1])
         models.Movie_Tag(movie=new_movie, tag=new_tag).save()
@@ -150,7 +161,10 @@ def tag_expression(tag_url, tag_name):
     if tags:
         return tags.first()
     tag = models.Tag(tag_url=tag_url, name=tag_name)
-    tag.save()
+    try:
+        tag.save()
+    except:
+        print "Tag saved faile! tag_url: " + tag_url
     result_msg.tag_count += 1
     return tag
 
@@ -164,10 +178,11 @@ def get_magnets(movie_info):
 
     magnet_str = r'<tr.*>\s*<td.*>\s*<a.*(magnet.*?)">\s*(.*?)\s*</a>\s*</td>\s*<td.*>\s*<a.*">\s*(.*?)\s*</a>\s*</td>\s*<td.*>\s*<a.*">\s*(.*?)\s*</a>\s*</td>\s*</tr>'
     print movie_info.movie_url
-    magnet_result = re.findall(magnet_str, magnet_context)
+    magnet_result = findall(magnet_str, magnet_context)
     magnet_count = 0
     for line in magnet_result:
         magnets = models.Magnet(title=movie_info.title, movie=movie_info, magnet_url=line[0])
+        print line[1]
         if len(search_str(r'(.*?)<a\s', line[1])) > 1:
             magnets.file_name = search_str(r'(.*?)<a\s', line[1])
             magnets.hd = 'y'

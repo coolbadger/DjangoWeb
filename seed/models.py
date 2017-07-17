@@ -17,6 +17,12 @@ class dream(models.Model):
     pass
 
 
+class Series(models.Model):
+    name = models.CharField(max_length=255)
+    series_url = models.CharField(max_length=1023)
+    pass
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=1023)
     no = models.CharField(max_length=50)
@@ -25,6 +31,7 @@ class Movie(models.Model):
     length = models.CharField(max_length=12, null=True)
     director = models.CharField(max_length=50, null=True)
     maker = models.CharField(max_length=50, null=True)
+    series = models.ForeignKey(Series, null=True)
     has_mask = models.CharField(max_length=2, null=True, default='y')
     uncensored = models.CharField(max_length=2, default='n')
 
@@ -35,9 +42,10 @@ class Movie(models.Model):
     pass
 
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=50)
-    tag_url = models.CharField(max_length=255)
+    tag_url = models.CharField(max_length=1023)
 
     pass
 
@@ -54,6 +62,7 @@ class Actors(models.Model):
     hometown = models.CharField(max_length=50, null=True)
     hobby = models.CharField(max_length=50, null=True)
     uncensored = models.CharField(max_length=2, default='n')
+    check_date = models.DateTimeField(null=True)
 
     pass
 

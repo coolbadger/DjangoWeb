@@ -1,44 +1,43 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import datetime
+from django.utils.timezone import utc
 from django.shortcuts import render, render_to_response
+from seed import models
 import threading
-
-from seed.crawler.web_crawler import web_content
-from seed.crawler import seedmm
-
 
 # Create your views here.
 
 
-def craw(target_url, name):
-    page = 1
-    while (True):
-        uncensored = 'n'
-        validate_url = target_url + str(page)
-        if 'uncensored' in validate_url:
-            uncensored = 'y'
-        print "start seeking at: " + validate_url
-        result_context = web_content(validate_url)
-        msg = seedmm.movie_expression(result_context, uncensored)
-        print "page " + str(page) + " complite"
-
-        for property, value in vars(msg).iteritems():
-            print property, ": ", value
-
-        page += 1
-    return name + "end"
+from seed.crawler.main import craw
 
 
 def default(request):
     threads = []
-    censored = threading.Thread(target=craw, args=(r'https://www.seedmm.com/page/', 'censored'))
+    # censored = threading.Thread(target=craw, args=(r'https://www.seedmm.com/page/',))
+    # uncensored = threading.Thread(target=craw, args=(r'https://www.seedmm.com/uncensored/page/',))
 
-    threads.append(censored)
+    # task = threading.Thread(target=craw, args=(r'https://www.seedmm.com/uncensored/star/l2r/',))
 
-    for thread in threads:
-        thread.setDaemon(True)
-        thread.start()
+    task = threading.Thread(target=update_by_actors)
+    task.setDaemon(True)
+    task.start()
+
+    # threads.append(task)
+
+    # for thread in threads:
+    #     thread.setDaemon(True)
+    #     thread.start()
 
     resp = render_to_response('index.html', locals())
     return resp
+
+
+def update_by_actors():
+    for actor in models.Actors.objects.filter(check_date=None):
+        url = actor.actor_url + r'/'
+        craw(url)
+        actor.check_date = datetime.datetime.now().replace(tzinfo=utc)
+        actor.save()
+    return ""
