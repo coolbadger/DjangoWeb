@@ -18,7 +18,7 @@ class dream(models.Model):
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=1023)
     no = models.CharField(max_length=50)
     movie_url = models.CharField(max_length=255)
     date = models.CharField(max_length=12, null=True)
@@ -60,7 +60,7 @@ class Actors(models.Model):
 
 class Magnet(models.Model):
     movie = models.ForeignKey(Movie, null=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=1023)
     file_name = models.CharField(max_length=1023)
     size = models.CharField(max_length=12)
     share_date = models.CharField(max_length=12)
