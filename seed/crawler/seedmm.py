@@ -9,9 +9,13 @@
 import math
 import random
 
+import datetime
+
+from django.utils.timezone import utc
+
 from seed import models
 from web_crawler import web_content
-from util import search_str, findall
+from util import search_str, findall, fix_esc_str
 
 
 class Result_Msg(object):
@@ -126,6 +130,8 @@ def detail_expression(detail_url):
     # for property, value in vars(movie).iteritems():
     #     print property, ": ", value
 
+    new_movie.check_date = datetime.datetime.now().replace(tzinfo=utc)
+    new_movie.save()
 
     return new_movie
 
@@ -140,7 +146,7 @@ def actor_expression(actor_url, name):
 
     start_str = r'<p>'
     end_str = r': (.*?)</p>'
-    image_url_str = r'<img src="(https://.{4,64}/actress/.{1,16})" title="' + name + '">'
+    image_url_str = r'<img src="(https://.{4,64}/actress/.{1,16})" title="' + fix_esc_str(name) + '">'
 
     actor.cup = search_str(start_str + r'罩杯' + end_str, actor_context)
     actor.age = search_str(start_str + r'年齡' + end_str, actor_context)

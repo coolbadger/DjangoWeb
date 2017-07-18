@@ -23,6 +23,7 @@ class Movie(models.Model):
     series = models.ForeignKey(Series, null=True)
     has_mask = models.CharField(max_length=2, null=True, default='y')
     uncensored = models.CharField(max_length=2, default='n')
+    check_date = models.DateTimeField(null=True)
 
     gid = models.CharField(max_length=255)
     uc = models.CharField(max_length=2)

@@ -17,7 +17,13 @@ import datetime
 
 # todo: multiThread process
 def craw(target_url):
-    page = 1
+    # 删除未处理完成的影片
+    for unchecked in models.Movie.objects.filter(check_date=None):
+        print unchecked.no + " is unchecked"
+        unchecked.delete()
+        print "deleted!"
+
+    page = 77
     while (True):
         uncensored = 'n'
         validate_url = target_url + str(page)
