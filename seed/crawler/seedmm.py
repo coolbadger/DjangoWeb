@@ -42,7 +42,7 @@ def movie_expression(context, censored_info):
     result_msg.uncensored = censored_info
     result_msg.reset()
 
-    movies_url_tr = r'<a class="movie-box" href="(.*?)">'
+    movies_url_tr = r'<a class="movie-box" href="(.*?)">[\s|\S]*<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"[\s|\S]*</a>'
 
     movie_results = findall(movies_url_tr, context)
     result_msg.total_count = len(movie_results)
@@ -51,7 +51,11 @@ def movie_expression(context, censored_info):
         procced_count += 1
         print "Processing: " + str(procced_count) + "/" + str(result_msg.total_count) + " \t" + " saved: " \
               + str(result_msg.movie_count) + " uncensored: " + result_msg.uncensored
-        detail_expression(line)
+        new_movie = detail_expression(line[0])
+        if new_movie.movie_img_url == None:
+            new_movie.movie_img_url = line[1]
+            new_movie.save()
+            print new_movie.title + " preview image saved."
         print str(procced_count) + "/" + str(result_msg.total_count) + " end\n"
     return result_msg
 

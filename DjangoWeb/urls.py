@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from seed import views as mis_view, urls as mis_urls
+from seed import views as seed_view, urls as seed_urls
 
 urlpatterns = [
-    url(r'^', mis_view.default),
+    url(r'^$', seed_view.default),
     url(r'^admin/', admin.site.urls),
-    url(r'^mis/', include(mis_urls.urlpatterns)),
+    url(r'^seed/', include(seed_urls.urlpatterns)),
 ]
