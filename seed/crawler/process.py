@@ -23,7 +23,7 @@ def craw(target_url):
         unchecked.delete()
         print "deleted!"
 
-    page = 77
+    page = 1
     while (True):
         uncensored = 'n'
         validate_url = target_url + str(page)
