@@ -42,7 +42,7 @@ def movie_expression(context, censored_info):
     result_msg.uncensored = censored_info
     result_msg.reset()
 
-    movies_url_tr = r'<a class="movie-box" href="(.*?)">[\s|\S]*<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"[\s|\S]*</a>'
+    movies_url_tr = r'<a class="movie-box" href="(.*?)">[\s|\S]{70,80}<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"[\s|\S]{10,1000}">\s*</div>\s*<div class="photo-info">'  # web_context = url
 
     movie_results = findall(movies_url_tr, context)
     result_msg.total_count = len(movie_results)

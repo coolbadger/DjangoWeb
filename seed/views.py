@@ -8,7 +8,7 @@ import threading
 
 # Create your views here.
 
-task = threading.Thread(target=process.update_by_actors)
+task = threading.Thread(target=process.update_censored)
 
 
 def default(request):
