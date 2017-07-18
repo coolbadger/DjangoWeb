@@ -22,6 +22,8 @@ def web_content(request_url, *data):
     login_request.add_header('referer', 'https://www.seedmm.com/')
 
     need_info = True
+
+    # todo: reconnection test
     while need_info:
         try:
             response = urllib2.urlopen(login_request, timeout=6000)

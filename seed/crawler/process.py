@@ -15,6 +15,7 @@ import const
 import datetime
 
 
+# todo: multiThread process
 def craw(target_url):
     page = 1
     while (True):

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Crawing' %}{% endblock %}
+{% block body %}
+    {% trans 'Crawing Now' %}
+
+    <a href="seed/craw_stop">stop crawing</a>
+{% endblock %}
