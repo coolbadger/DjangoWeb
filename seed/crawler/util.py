@@ -17,4 +17,4 @@ def search_str(expr_str, context):
 
 
 def findall(exper_str, context):
-    return re.findall(exper_str, context, re.S | re.M)
+    return re.findall(exper_str, context)

@@ -48,11 +48,13 @@ def movie_expression(context, censored_info):
         print "Processing: " + str(procced_count) + "/" + str(result_msg.total_count) + " \t" + " saved: " \
               + str(result_msg.movie_count) + " uncensored: " + result_msg.uncensored
         detail_expression(line)
+        print str(procced_count) + "/" + str(result_msg.total_count) + " end\n"
     return result_msg
 
 
 def detail_expression(detail_url):
     new_movies = models.Movie.objects.filter(movie_url=detail_url)
+    print detail_url
 
     if new_movies:
         return new_movies.first()
@@ -95,9 +97,9 @@ def detail_expression(detail_url):
         if not series_list:
             series = models.Series(series_url=series_info[0], name=series_info[1])
             series.save()
+            print "Series " + series.name + " saved"
         else:
             series = series_list.first()
-        print series
         new_movie.series = series
 
     new_movie.save()
@@ -180,12 +182,11 @@ def get_magnets(movie_info):
     magnet_context = web_content(magnet_list_url)
 
     magnet_str = r'<tr.*>\s*<td.*>\s*<a.*(magnet.*?)">\s*(.*?)\s*</a>\s*</td>\s*<td.*>\s*<a.*">\s*(.*?)\s*</a>\s*</td>\s*<td.*>\s*<a.*">\s*(.*?)\s*</a>\s*</td>\s*</tr>'
-    print movie_info.movie_url
     magnet_result = findall(magnet_str, magnet_context)
     magnet_count = 0
     for line in magnet_result:
         magnets = models.Magnet(title=movie_info.title, movie=movie_info, magnet_url=line[0])
-        print line[1]
+
         if len(search_str(r'(.*?)<a\s', line[1])) > 1:
             magnets.file_name = search_str(r'(.*?)<a\s', line[1])
             magnets.hd = 'y'

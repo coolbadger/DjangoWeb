@@ -12,9 +12,9 @@ import threading
 
 
 def default(request):
-    task = threading.Thread(target=process.update_censored())
+    task = threading.Thread(target=process.update_censored)
     task.setDaemon(True)
     task.start()
 
-    resp = render_to_response('index.html', locals())
+    resp = render_to_response('index.html')
     return resp

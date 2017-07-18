@@ -6,17 +6,6 @@ from django.db import models
 
 # Create your models here.
 
-# 做个梦呗
-class dream(models.Model):
-    title = models.CharField(max_length=50)
-    sn = models.CharField(max_length=12)
-    content = models.CharField(max_length=255)
-    tag = models.CharField(max_length=10)
-    date = models.DateField()
-    state = models.CharField(max_length=2)
-    pass
-
-
 class Series(models.Model):
     name = models.CharField(max_length=255)
     series_url = models.CharField(max_length=1023)
