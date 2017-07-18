@@ -69,9 +69,9 @@ def detail_expression(detail_url):
     series_str = r'<p><span class="header">系列:</span> <a href="(https://www.seedmm.com/series/\w{1,64}?)">(.*?)</a></p>'
     tag_str = r'<span class="genre"><a href="(https://www.seedmm.com/.*?)">(.{1,64}?)</a></span>'
     if result_msg.uncensored == 'y':
-        actors_url_str = r'<a href="(https://www.seedmm.com/uncensored/star/\w+?)">(.{1,64}?)</a>'
+        actors_url_str = r'<a href="(https://www.seedmm.com/uncensored/star/\w{1,16})">(.{1,64}?)</a>'
     else:
-        actors_url_str = r'<a href="(https://www.seedmm.com/star/\w+?)">(.|\.{1,64}?)</a>'
+        actors_url_str = r'<a href="(https://www.seedmm.com/star/\w{1,16})">(.{1,64}?)</a>'
 
     gid_str = r'var gid = (.*?);'
     uc_str = r'var uc = (.*?);'
@@ -138,9 +138,11 @@ def actor_expression(actor_url, name):
 
     start_str = r'<p>'
     end_str = r': (.*?)</p>'
+    image_url_str = r'<img src="(https://.{4,64}/actress/.{1,16})" title="' + name + '">'
 
     actor.cup = search_str(start_str + r'罩杯' + end_str, actor_context)
-    actor.birth = search_str(start_str + r'年齡' + end_str, actor_context)
+    actor.age = search_str(start_str + r'年齡' + end_str, actor_context)
+    actor.birth = search_str(start_str + r'生日' + end_str, actor_context)
     actor.heigth = search_str(start_str + r'身高' + end_str, actor_context)
     actor.bust = search_str(start_str + r'胸圍' + end_str, actor_context)
     actor.waist = search_str(start_str + r'腰圍' + end_str, actor_context)
@@ -148,6 +150,7 @@ def actor_expression(actor_url, name):
     actor.hometown = search_str(start_str + r'出生地' + end_str, actor_context)
     actor.hobby = search_str(start_str + r'愛好' + end_str, actor_context)
     actor.uncensored = result_msg.uncensored
+    actor.image_url = search_str(image_url_str, actor_context)
 
     actor.save()
     print "Actor :" + actor.name + " saved!"

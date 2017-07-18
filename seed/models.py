@@ -42,7 +42,6 @@ class Movie(models.Model):
     pass
 
 
-
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     tag_url = models.CharField(max_length=1023)
@@ -53,12 +52,14 @@ class Tag(models.Model):
 class Actors(models.Model):
     actor_url = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
-    birth = models.CharField(max_length=12)
-    heigth = models.CharField(max_length=12)
-    cup = models.CharField(max_length=12)
-    bust = models.CharField(max_length=12)
-    waist = models.CharField(max_length=12)
-    hips = models.CharField(max_length=12)
+    image_url = models.CharField(max_length=255, null=True)
+    birth = models.CharField(max_length=12, null=True)
+    age = models.CharField(max_length=12, null=True)
+    heigth = models.CharField(max_length=12, null=True)
+    cup = models.CharField(max_length=12, null=True)
+    bust = models.CharField(max_length=12, null=True)
+    waist = models.CharField(max_length=12, null=True)
+    hips = models.CharField(max_length=12, null=True)
     hometown = models.CharField(max_length=50, null=True)
     hobby = models.CharField(max_length=50, null=True)
     uncensored = models.CharField(max_length=2, default='n')
@@ -71,8 +72,8 @@ class Magnet(models.Model):
     movie = models.ForeignKey(Movie, null=True)
     title = models.CharField(max_length=1023)
     file_name = models.CharField(max_length=1023)
-    size = models.CharField(max_length=12)
-    share_date = models.CharField(max_length=12)
+    size = models.CharField(max_length=12,null=True)
+    share_date = models.CharField(max_length=12,null=True)
     magnet_url = models.CharField(max_length=1023)
     hd = models.CharField(max_length=2, default='n')
 

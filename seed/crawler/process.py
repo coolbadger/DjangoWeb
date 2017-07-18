@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Script Name	: main
+# Script Name	: process
 # Author		: badger
-# Created		: 2017/7/17
+# Created		: 2017/7/18
 # Description	: 
+
+from seed import models
+from web_crawler import web_content
+from django.utils.timezone import utc
 
 import seedmm
 import const
-from web_crawler import web_content
+import datetime
 
 
 def craw(target_url):
@@ -31,3 +35,24 @@ def craw(target_url):
             print property, ": ", value
 
         page += 1
+
+
+def update_by_actors():
+    for actor in models.Actors.objects.filter(check_date=None):
+        url = actor.actor_url + r'/'
+        craw(url)
+        actor.check_date = datetime.datetime.now().replace(tzinfo=utc)
+        actor.save()
+    return const.CRAW_FINISH
+
+
+def update_uncensored():
+    url = r'https://www.seedmm.com/uncensored/page/'
+    craw(url)
+    return const.CRAW_FINISH
+
+
+def update_censored():
+    url = r'https://www.seedmm.com/page/'
+    craw(url)
+    return const.CRAW_FINISH
