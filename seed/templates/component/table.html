@@ -1,0 +1,20 @@
+{% load i18n %}
+<table class="table">
+    <tr>
+        <td class="active">{% trans 'Name' %}</td>
+        <td class="active">{% trans 'Age' %}</td>
+        <td class="active">{% trans 'Birth' %}</td>
+        <td class="active">{% trans 'Heigth' %}</td>
+        <td class="active">{% trans 'Cup' %}</td>
+    </tr>
+    {% for row in table_result %}
+        <tr>
+            <td class="active">{{ row.name }}</td>
+            <td class="active">{{ row.age }}</td>
+            <td class="active">{{ row.birth }}</td>
+            <td class="active">{{ row.heigth }}</td>
+            <td class="active">{{ row.cup }}</td>
+        </tr>
+    {% endfor %}
+
+</table>

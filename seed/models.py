@@ -13,7 +13,7 @@ class Series(models.Model):
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=1023)
+    title = models.CharField(max_length=1023,help_text='test')
     no = models.CharField(max_length=50)
     movie_url = models.CharField(max_length=255)
     movie_img_url = models.CharField(max_length=255, null=True)

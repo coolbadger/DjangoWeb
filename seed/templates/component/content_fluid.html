@@ -1,0 +1,53 @@
+{% load i18n %}
+<div class="container-fluid">
+    <div class="nav">
+        <div class="col-sm-8">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="/page/1" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for no in page_range %}
+                        <li {% if no == page_no %}class="active" {% endif %}><a href="/page/{{ no }}">{{ no }}</a></li>
+                    {% endfor %}
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="col-sm-4">
+            </br><a href="/seed/process_start">{% trans 'Start Process' %}</a>
+        </div>
+    </div>
+    <div class="masonry-container">
+        {% for row in table_result %}
+
+            <div class="col-sm-4 col-md-3 col-lg-2 item">
+                <div class="thumbnail"><img src="{{ row.image_url }}" alt="">
+                    <div class="caption"><h3>{{ row.name }}</h3>
+                        <p>{% if row.uncensored == 'y' %}{% trans 'Uncensored' %}{% else %}
+                            {% trans 'Censored' %}{% endif %}</p>
+                        <p>
+                            <a href="{{ row.actor_url }}" target="view_window" class="btn btn-primary"
+                               role="button">Detail</a>
+                            <a href="#" class="btn btn-default" role="button">MoreInfo</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    var $container = $('.masonry-container');
+    $container.imagesLoaded(function () {
+        $container.masonry({columnWidth: '.item', itemSelector: '.item'});
+    });
+</script>
