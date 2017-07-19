@@ -10,6 +10,7 @@ import math
 import random
 
 import datetime
+import threading
 
 from django.utils.timezone import utc
 
@@ -20,6 +21,7 @@ from util import search_str, findall, fix_esc_str
 
 class Result_Msg(object):
     actor_count = 0
+    procced_count = 0
     total_count = 0
     movie_count = 0
     resource_count = 0
@@ -28,6 +30,7 @@ class Result_Msg(object):
 
     def reset(self):
         self.actor_count = 0
+        self.procced_count = 0
         self.movie_count = 0
         self.resource_count = 0
         self.tag_count = 0
@@ -42,22 +45,49 @@ def movie_expression(context, censored_info):
     result_msg.uncensored = censored_info
     result_msg.reset()
 
-    movies_url_tr = r'<a class="movie-box" href="(.*?)">[\s|\S]{70,80}<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"[\s|\S]{10,1000}">\s*</div>\s*<div class="photo-info">'  # web_context = url
+    movies_url_tr = r'<a class="movie-box" href="(.*?)">'  # web_context = url
 
     movie_results = findall(movies_url_tr, context)
     result_msg.total_count = len(movie_results)
-    procced_count = 0
+    tasks = []
     for line in movie_results:
-        procced_count += 1
-        print "Processing: " + str(procced_count) + "/" + str(result_msg.total_count) + " \t" + " saved: " \
-              + str(result_msg.movie_count) + " uncensored: " + result_msg.uncensored
-        new_movie = detail_expression(line[0])
-        if new_movie.movie_img_url == None:
-            new_movie.movie_img_url = line[1]
-            new_movie.save()
-            print new_movie.title + " preview image saved."
-        print str(procced_count) + "/" + str(result_msg.total_count) + " end\n"
+        process_task(line,context)
+    #     new_task = threading.Thread(target=process_task, args=(line, context,))
+    #     tasks.append(new_task)
+    #
+    # for task_item in tasks:
+    #     if not task_item.isAlive():
+    #         task_item.setDaemon(True)
+    #         task_item.start()
+    # while result_msg.procced_count == result_msg.total_count:
+    #     return result_msg
+        # process_task(line, context)
+        # procced_count += 1
+        # print "Processing: " + str(procced_count) + "/" + str(result_msg.total_count) + " \t" + " saved: " \
+        #       + str(result_msg.movie_count) + " uncensored: " + result_msg.uncensored
+        # new_movie = detail_expression(line)
+        # if new_movie.movie_img_url == None:
+        #     movie_img_url = r'<a class="movie-box" href="' + line \
+        #                     + '">[\s|\S]{70,80}<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"'
+        #     new_movie.movie_img_url = search_str(movie_img_url, context)
+        #     new_movie.save()
+        #     print new_movie.movie_img_url + " preview image saved."
+        # print str(procced_count) + "/" + str(result_msg.total_count) + " end\n"
     return result_msg
+
+
+def process_task(movie_url, movie_context):
+    result_msg.procced_count += 1
+    print "Processing: " + str(result_msg.procced_count) + "/" + str(result_msg.total_count) + " \t" + " saved: " \
+          + str(result_msg.movie_count) + " uncensored: " + result_msg.uncensored
+    new_movie = detail_expression(movie_url)
+    if new_movie.movie_img_url == None:
+        movie_img_url = r'<a class="movie-box" href="' + movie_url \
+                        + '">[\s|\S]{70,80}<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"'
+        new_movie.movie_img_url = search_str(movie_img_url, movie_context)
+        new_movie.save()
+        print new_movie.movie_img_url + " preview image saved."
+    print str(result_msg.procced_count) + "/" + str(result_msg.total_count) + " end\n"
 
 
 def detail_expression(detail_url):

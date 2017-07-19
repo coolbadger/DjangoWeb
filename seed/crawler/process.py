@@ -14,6 +14,8 @@ import seedmm
 import const
 import datetime
 
+process_continue = True
+
 
 # todo: multiThread process
 def craw(target_url):
@@ -45,7 +47,7 @@ def craw(target_url):
 
 
 def update_by_actors():
-    for actor in models.Actors.objects.filter(check_date=None):
+    for actor in models.Actors.objects.filter(check_date=None, uncensored='y'):
         url = actor.actor_url + r'/'
         craw(url)
         actor.check_date = datetime.datetime.now().replace(tzinfo=utc)
@@ -62,4 +64,29 @@ def update_uncensored():
 def update_censored():
     url = r'https://www.seedmm.com/page/'
     craw(url)
+    return const.CRAW_FINISH
+
+
+def update_all():
+    times = 0
+    # try:
+    #     update_censored()
+    # except Exception as e:
+    #     print str(e)
+    #
+    # try:
+    #     update_uncensored()
+    # except Exception as e:
+    #     print str(e)
+
+
+    while process_continue:
+        times += 1
+        try:
+            update_by_actors()
+        except Exception as e:
+            print str(e)
+            print "something is not good for " + str(times) + " times."
+            if times > 200:
+                return const.CRAW_FINISH
     return const.CRAW_FINISH
