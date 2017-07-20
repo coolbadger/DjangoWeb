@@ -10,6 +10,7 @@ from seed import views
 
 urlpatterns = [
     url(r'^index/', views.default),
+    url(r'^actor/(\d{1,10})', views.actor_resource),
     url(r'^process_start/', views.process_start),
     url(r'^process_stop/', views.process_stop),
 ]

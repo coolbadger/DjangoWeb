@@ -47,7 +47,7 @@ def craw(target_url):
 
 
 def update_by_actors():
-    for actor in models.Actors.objects.filter(check_date=None, uncensored='y'):
+    for actor in models.Actors.objects.filter(check_date=None):
         url = actor.actor_url + r'/'
         craw(url)
         actor.check_date = datetime.datetime.now().replace(tzinfo=utc)
@@ -69,6 +69,7 @@ def update_censored():
 
 def update_all():
     times = 0
+    # update_by_actors()
     # try:
     #     update_censored()
     # except Exception as e:

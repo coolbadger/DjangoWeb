@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'ActorResource' %}{% endblock %}
+{% block body %}
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ count }}
+        </div>
+        <div class="text_area_box">
+            {% for data_item in extra_data %}
+                {{ data_item }}<br>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'seed/movie_fluid.html' %}
+{% endblock %}

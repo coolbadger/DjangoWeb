@@ -11,12 +11,13 @@ import random
 
 import datetime
 import threading
+import chardet
 
 from django.utils.timezone import utc
 
 from seed import models
 from web_crawler import web_content
-from util import search_str, findall, fix_esc_str
+from util import search_str, findall, fix_esc_str, sub_filename
 
 
 class Result_Msg(object):
@@ -51,16 +52,16 @@ def movie_expression(context, censored_info):
     result_msg.total_count = len(movie_results)
     tasks = []
     for line in movie_results:
-        process_task(line,context)
-    #     new_task = threading.Thread(target=process_task, args=(line, context,))
-    #     tasks.append(new_task)
-    #
-    # for task_item in tasks:
-    #     if not task_item.isAlive():
-    #         task_item.setDaemon(True)
-    #         task_item.start()
-    # while result_msg.procced_count == result_msg.total_count:
-    #     return result_msg
+        process_task(line, context)
+        #     new_task = threading.Thread(target=process_task, args=(line, context,))
+        #     tasks.append(new_task)
+        #
+        # for task_item in tasks:
+        #     if not task_item.isAlive():
+        #         task_item.setDaemon(True)
+        #         task_item.start()
+        # while result_msg.procced_count == result_msg.total_count:
+        #     return result_msg
         # process_task(line, context)
         # procced_count += 1
         # print "Processing: " + str(procced_count) + "/" + str(result_msg.total_count) + " \t" + " saved: " \
@@ -224,14 +225,19 @@ def get_magnets(movie_info):
     magnet_str = r'<tr.*>\s*<td.*>\s*<a.*(magnet.*?)">\s*(.*?)\s*</a>\s*</td>\s*<td.*>\s*<a.*">\s*(.*?)\s*</a>\s*</td>\s*<td.*>\s*<a.*">\s*(.*?)\s*</a>\s*</td>\s*</tr>'
     magnet_result = findall(magnet_str, magnet_context)
     magnet_count = 0
+
     for line in magnet_result:
         magnets = models.Magnet(title=movie_info.title, movie=movie_info, magnet_url=line[0])
 
         if len(search_str(r'(.*?)<a\s', line[1])) > 1:
-            magnets.file_name = search_str(r'(.*?)<a\s', line[1])
+            magnets.file_name = sub_filename(search_str(r'(.*?)<a\s', line[1]))
             magnets.hd = 'y'
         else:
-            magnets.file_name = line[1]
+            magnets.file_name = sub_filename(search_str(r'(.*?)<a\s', line[1]))
+
+        # fix bug for strange encode.
+        if chardet.detect(sub_filename(search_str(r'(.*?)<a\s', line[1])))['confidence'] == 0:
+            magnets.file_name = movie_info.title
         magnets.size = line[2]
         magnets.share_date = line[3]
         magnets.save()

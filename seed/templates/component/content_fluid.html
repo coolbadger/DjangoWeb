@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="container-fluid">
+{% block nav_bar %}
     <div class="nav">
         <div class="col-sm-8">
             <nav aria-label="Page navigation">
@@ -12,11 +12,11 @@
                     {% for no in page_range %}
                         <li {% if no == page_no %}class="active" {% endif %}><a href="/page/{{ no }}">{{ no }}</a></li>
                     {% endfor %}
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
+                    {#                    <li>#}
+                    {#                        <a href="#" aria-label="Next">#}
+                    {#                            <span aria-hidden="true">Have More</span>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
                 </ul>
             </nav>
         </div>
@@ -25,24 +25,27 @@
             </br><a href="/seed/process_start">{% trans 'Start Process' %}</a>
         </div>
     </div>
-    <div class="masonry-container">
-        {% for row in table_result %}
-
-            <div class="col-sm-4 col-md-3 col-lg-2 item">
-                <div class="thumbnail"><img src="{{ row.image_url }}" alt="">
+{% endblock %}
+<div class="masonry-container">
+    {% for row in table_result %}
+        <div class="col-sm-4 col-md-3 col-lg-2 item">
+            {% block result_item %}
+                <div class="thumbnail">
+                    <img src="{{ row.image_url }}" alt="">
                     <div class="caption"><h3>{{ row.name }}</h3>
                         <p>{% if row.uncensored == 'y' %}{% trans 'Uncensored' %}{% else %}
                             {% trans 'Censored' %}{% endif %}</p>
                         <p>
                             <a href="{{ row.actor_url }}" target="view_window" class="btn btn-primary"
-                               role="button">Detail</a>
-                            <a href="#" class="btn btn-default" role="button">MoreInfo</a>
+                               role="button">{% trans 'Details' %}</a>
+                            <a href="/seed/actor/{{ row.id }}" target="view_window" class="btn btn-default"
+                               role="button">{% trans 'Resources' %}</a>
                         </p>
                     </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+                </div>s
+            {% endblock %}
+        </div>
+    {% endfor %}
 </div>
 
 <script>
