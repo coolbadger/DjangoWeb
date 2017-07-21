@@ -122,7 +122,7 @@ def detail_expression(detail_url):
     new_movie.no = search_str(no_str, detail_context)
     new_movie.date = search_str(date_str, detail_context)
     new_movie.length = search_str(length_str, detail_context)
-    new_movie.director = search_str(director_str, detail_context)
+    new_movie.director = sub_filename(search_str(director_str, detail_context))
     new_movie.maker = search_str(maker_str, detail_context)
 
     new_movie.gid = search_str(gid_str, detail_context)
