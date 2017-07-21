@@ -19,6 +19,9 @@ def default(request):
     page_no = 1
     page_range = range(1, 6)
     table_result = result_obj[:30]
+    actor_count = result_obj.count()
+
+    total_page = result_obj.count() / 30 - 1
 
     resp = render_to_response('index.html', locals())
     return resp
@@ -29,6 +32,7 @@ def page(request, page_no):
         page_no = 1
     page_no = int(page_no)
     page_count = 30
+    actor_count = result_obj.count()
 
     total_page = result_obj.count() / page_count
     page_range = []
@@ -45,7 +49,8 @@ def page(request, page_no):
     table_result = result_obj[
                    page_no * page_count - page_count:page_no * page_count]
 
-    resp_data = table.table_date(table_result, page_no, page_range)
+    resp_data = dict(table.table_date(table_result, page_no, page_range).items() + {'actor_count': actor_count,
+                                                                                    'total_page': total_page - 1}.items())
     resp = render_to_response('index.html', resp_data)
     return resp
 
