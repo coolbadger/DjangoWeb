@@ -20,25 +20,25 @@ msgstr ""
 
 #: seed/templates/component/content_fluid.html:26
 msgid "ActorsCount: "
-msgstr "女优数"
+msgstr "女优数："
 
 #: seed/templates/component/content_fluid.html:27
 msgid "CheckedActorsCount: "
-msgstr "已核查女优数"
+msgstr "已核查女优数："
 
 #: seed/templates/component/content_fluid.html:28
 msgid "PageCount: "
-msgstr "页数"
+msgstr "页数："
 
 #: seed/templates/component/content_fluid.html:29
 msgid "MovieCount: "
-msgstr "影片数"
+msgstr "影片数："
 
 #: seed/templates/component/content_fluid.html:30
 #, fuzzy
 #| msgid "Resources"
 msgid "ResourceCount: "
-msgstr "资源列表"
+msgstr "资源数："
 
 #: seed/templates/component/table.html:4
 msgid "Name"
