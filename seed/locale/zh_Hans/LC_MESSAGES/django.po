@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-19 17:50+0800\n"
+"POT-Creation-Date: 2017-07-21 17:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,24 +18,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: seed/templates/component/content_fluid.html:25
-msgid "Start Process"
-msgstr "开始爬取信息"
+#: seed/templates/component/content_fluid.html:26
+msgid "ActorsCount: "
+msgstr "女优数"
 
-#: seed/templates/component/content_fluid.html:34
-msgid "Uncensored"
-msgstr "无码"
+#: seed/templates/component/content_fluid.html:27
+msgid "CheckedActorsCount: "
+msgstr "已核查女优数"
 
-#: seed/templates/component/content_fluid.html:35
-msgid "Censored"
-msgstr "有码"
+#: seed/templates/component/content_fluid.html:28
+msgid "PageCount: "
+msgstr "页数"
 
-#: seed/templates/component/content_fluid.html:38
-msgid "Details"
-msgstr "详情"
+#: seed/templates/component/content_fluid.html:29
+msgid "MovieCount: "
+msgstr "影片数"
 
-#: seed/templates/component/content_fluid.html:39
-msgid "Resources"
+#: seed/templates/component/content_fluid.html:30
+#, fuzzy
+#| msgid "Resources"
+msgid "ResourceCount: "
 msgstr "资源列表"
 
 #: seed/templates/component/table.html:4
@@ -68,8 +70,42 @@ msgstr "正在爬取"
 
 #: seed/templates/index.html:3
 msgid "SeedIndex"
-msgstr ""
+msgstr "资源索引"
 
 #: seed/templates/login.html:3
 msgid "SystemLogin"
 msgstr "系统登录"
+
+#: seed/templates/seed/actor_fluid.html:6
+#, fuzzy
+#| msgid "Resources"
+msgid "Open resource:"
+msgstr "资源列表"
+
+#: seed/templates/seed/actor_fluid.html:10
+#: seed/templates/seed/movie_fluid.html:10
+msgid "Uncensored"
+msgstr "无码"
+
+#: seed/templates/seed/actor_fluid.html:11
+#: seed/templates/seed/movie_fluid.html:11
+msgid "Censored"
+msgstr "有码"
+
+#: seed/templates/seed/actor_fluid.html:14
+#: seed/templates/seed/movie_fluid.html:14
+msgid "Details"
+msgstr "详情"
+
+#: seed/templates/seed/actor_fluid.html:16
+msgid "Resources"
+msgstr "资源列表"
+
+#: seed/templates/seed/actor_resource.html:3
+#, fuzzy
+#| msgid "Resources"
+msgid "ActorResource"
+msgstr "资源列表"
+
+#~ msgid "Start Process"
+#~ msgstr "开始爬取信息"
