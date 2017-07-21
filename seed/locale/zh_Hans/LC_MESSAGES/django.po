@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-21 17:34+0800\n"
+"POT-Creation-Date: 2017-07-21 17:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,8 +35,6 @@ msgid "MovieCount: "
 msgstr "影片数："
 
 #: seed/templates/component/content_fluid.html:30
-#, fuzzy
-#| msgid "Resources"
 msgid "ResourceCount: "
 msgstr "资源数："
 
