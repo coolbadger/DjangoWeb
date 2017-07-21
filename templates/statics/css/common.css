@@ -16,4 +16,10 @@
     -webkit-user-modify: read-write-plaintext-only;
 }
 
-body{ background: #eeeeeb;}
+body {
+    background: #eeeeeb;
+}
+
+.link {
+    cursor: pointer;
+}
