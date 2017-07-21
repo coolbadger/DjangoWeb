@@ -4,7 +4,7 @@
 {% endblock %}
 {% block result_item %}
     <div class="thumbnail">
-        <img src="{{ row.movie_img_url }}" alt="">
+        <img src="{{ row.movie_img_url }}" alt="" class="img-rounded" width="100%">
         <div class="caption"><h3>{{ row.title }}</h3>
             <p>{% if row.uncensored == 'y' %}{% trans 'Uncensored' %}{% else %}
                 {% trans 'Censored' %}{% endif %}</p>

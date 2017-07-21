@@ -1,7 +1,7 @@
 {% load i18n %}
 {% block nav_bar %}
     <div class="nav">
-        <div class="col-sm-8">
+        <div class="col-md-4">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li>
@@ -20,8 +20,15 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-sm-4">
-            </br><a>{% trans 'ActorsCount: ' %}{{ actor_count }} {% trans 'PageCount: ' %}{{ total_page }}</a>
+        <div class="col-md-8 nav">
+            <div>
+                <br>
+                <span class="label label-default">{% trans 'ActorsCount: ' %}{{ actor_count }}</span>
+                <span class="label label-primary">{% trans 'CheckedActorsCount: ' %}{{ checked_actor_count }}</span>
+                <span class="label label-success">{% trans 'PageCount: ' %}{{ total_page }}</span>
+                <span class="label label-info">{% trans 'MovieCount: ' %}{{ movie_count }}</span>
+                <span class="label label-warning">{% trans 'ResourceCount: ' %}{{ magnet_count }}</span>
+            </div>
         </div>
         {##}
         {#        <div class="col-sm-4">#}
@@ -34,7 +41,7 @@
         <div class="col-sm-4 col-md-3 col-lg-2 item">
             {% block result_item %}
                 <div class="thumbnail">
-                    <img src="{{ row.image_url }}" alt="">
+                    <img src="{{ row.image_url }}" alt="" class="img-rounded">
                     <div class="caption"><h3>{{ row.name }}</h3>
                         <p>{% if row.uncensored == 'y' %}{% trans 'Uncensored' %}{% else %}
                             {% trans 'Censored' %}{% endif %}</p>
@@ -45,7 +52,7 @@
                                role="button">{% trans 'Resources' %}</a>
                         </p>
                     </div>
-                </div>s
+                </div>
             {% endblock %}
         </div>
     {% endfor %}

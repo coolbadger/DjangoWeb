@@ -19,7 +19,10 @@ def default(request):
     page_no = 1
     page_range = range(1, 6)
     table_result = result_obj[:30]
-    actor_count = result_obj.count()
+    actor_count = models.Actors.objects.count()
+    checked_actor_count = result_obj.count()
+    movie_count = models.Movie.objects.count()
+    magnet_count = models.Magnet.objects.count()
 
     total_page = result_obj.count() / 30 - 1
 
@@ -32,7 +35,10 @@ def page(request, page_no):
         page_no = 1
     page_no = int(page_no)
     page_count = 30
-    actor_count = result_obj.count()
+    actor_count = models.Actors.objects.count()
+    checked_actor_count = result_obj.count()
+    movie_count = models.Movie.objects.count()
+    magnet_count = models.Magnet.objects.count()
 
     total_page = result_obj.count() / page_count
     page_range = []
@@ -49,8 +55,11 @@ def page(request, page_no):
     table_result = result_obj[
                    page_no * page_count - page_count:page_no * page_count]
 
-    resp_data = dict(table.table_date(table_result, page_no, page_range).items() + {'actor_count': actor_count,
-                                                                                    'total_page': total_page - 1}.items())
+    resp_data = dict(table.table_date(table_result, page_no, page_range).items() +
+                     {'actor_count': actor_count, 'total_page': total_page - 1,
+                      'checked_actor_count': checked_actor_count,
+                      'movie_count': movie_count,
+                      'magnet_count': magnet_count}.items())
     resp = render_to_response('index.html', resp_data)
     return resp
 
