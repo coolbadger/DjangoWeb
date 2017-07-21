@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-13 07:14+0000\n"
+"POT-Creation-Date: 2017-07-19 17:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: mis/templates/index.html:6
-msgid "MisIndex"
-msgstr "管理系统"
+#: seed/templates/component/content_fluid.html:25
+msgid "Start Process"
+msgstr "开始爬取信息"
 
-#: mis/templates/index.html:9
-msgid "Hello Badger"
-msgstr "你好 Badger"
+#: seed/templates/component/content_fluid.html:34
+msgid "Uncensored"
+msgstr "无码"
+
+#: seed/templates/component/content_fluid.html:35
+msgid "Censored"
+msgstr "有码"
+
+#: seed/templates/component/content_fluid.html:38
+msgid "Details"
+msgstr "详情"
+
+#: seed/templates/component/content_fluid.html:39
+msgid "Resources"
+msgstr "资源列表"
+
+#: seed/templates/component/table.html:4
+msgid "Name"
+msgstr ""
+
+#: seed/templates/component/table.html:5
+msgid "Age"
+msgstr ""
+
+#: seed/templates/component/table.html:6
+msgid "Birth"
+msgstr ""
+
+#: seed/templates/component/table.html:7
+msgid "Heigth"
+msgstr ""
+
+#: seed/templates/component/table.html:8
+msgid "Cup"
+msgstr ""
+
+#: seed/templates/craw.html:3
+msgid "Crawing"
+msgstr "爬取中……"
+
+#: seed/templates/craw.html:5
+msgid "Crawing Now"
+msgstr "正在爬取"
+
+#: seed/templates/index.html:3
+msgid "SeedIndex"
+msgstr ""
+
+#: seed/templates/login.html:3
+msgid "SystemLogin"
+msgstr "系统登录"
