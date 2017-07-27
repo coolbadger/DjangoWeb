@@ -54,6 +54,13 @@ def update_by_actors():
         actor.save()
     return const.CRAW_FINISH
 
+def update_by_series():
+    for serie in models.Series.objects.filter(check_date=None):
+        url = serie.actor_url + r'/'
+        craw(url)
+        serie.check_date = datetime.datetime.now().replace(tzinfo=utc)
+        serie.save()
+    return const.CRAW_FINISH
 
 def update_uncensored():
     url = r'https://www.seedmm.com/uncensored/page/'

@@ -7,13 +7,14 @@ from django.db import models
 # Create your models here.
 
 class Series(models.Model):
-    name = models.CharField(max_length=255)
-    series_url = models.CharField(max_length=1023)
+    name = models.CharField(max_length=1023)
+    series_url = models.TextField()
+    check_date = models.DateTimeField(null=True)
     pass
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=1023,help_text='test')
+    title = models.TextField()
     no = models.CharField(max_length=50)
     movie_url = models.CharField(max_length=255)
     movie_img_url = models.CharField(max_length=255, null=True)
@@ -34,16 +35,16 @@ class Movie(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
-    tag_url = models.CharField(max_length=1023)
+    name = models.TextField()
+    tag_url = models.TextField()
 
     pass
 
 
 class Actors(models.Model):
     actor_url = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    image_url = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=1023)
+    image_url = models.TextField(null=True)
     birth = models.CharField(max_length=12, null=True)
     age = models.CharField(max_length=12, null=True)
     heigth = models.CharField(max_length=12, null=True)
@@ -61,11 +62,11 @@ class Actors(models.Model):
 
 class Magnet(models.Model):
     movie = models.ForeignKey(Movie, null=True)
-    title = models.CharField(max_length=1023)
-    file_name = models.CharField(max_length=1023)
+    title = models.TextField()
+    file_name = models.TextField()
     size = models.CharField(max_length=12, null=True)
     share_date = models.CharField(max_length=12, null=True)
-    magnet_url = models.CharField(max_length=1023)
+    magnet_url = models.TextField()
     hd = models.CharField(max_length=2, default='n')
 
     pass
