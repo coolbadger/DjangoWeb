@@ -112,16 +112,17 @@ def series_page(request, page_no):
     page_count = 30
     series_count = models.Series.objects.count()
     actor_count = models.Actors.objects.count()
-    checked_actor_count = series_result.count()
+    checked_actor_count = result_obj.count()
     movie_count = models.Movie.objects.count()
     magnet_count = models.Magnet.objects.count()
+    series_count = series_result.count()
+    checked_series_count = series_result.filter(check_date=None).count()
 
     for se in series_result:
         if not se.image_url:
             mv = models.Movie.objects.filter(series=se, movie_img_url__contains='.').first()
             if mv:
                 se.image_url = mv.movie_img_url
-
 
     total_page = series_result.count() / page_count
     page_range = []
@@ -142,7 +143,9 @@ def series_page(request, page_no):
                      {'actor_count': actor_count, 'total_page': total_page - 1,
                       'checked_actor_count': checked_actor_count,
                       'movie_count': movie_count,
-                      'magnet_count': magnet_count}.items())
+                      'magnet_count': magnet_count,
+                      'series_count':series_count,
+                      'checked_series_count':checked_series_count}.items())
     resp = render_to_response('series.html', resp_data)
     return resp
 
