@@ -85,7 +85,10 @@ def process_task(movie_url, movie_context):
     if new_movie.movie_img_url == None:
         movie_img_url = r'<a class="movie-box" href="' + movie_url \
                         + '">[\s|\S]{70,80}<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"'
-        new_movie.movie_img_url = search_str(movie_img_url, movie_context)
+        url = search_str(movie_img_url, movie_context)
+        new_movie.movie_img_url = url
+        if len(str(url)) > 4:
+            new_movie.series.image_url = url
         new_movie.save()
         print new_movie.movie_img_url + " preview image saved."
     print str(result_msg.procced_count) + "/" + str(result_msg.total_count) + " end\n"
