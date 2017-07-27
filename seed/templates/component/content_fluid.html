@@ -10,7 +10,8 @@
                         </a>
                     </li>
                     {% for no in page_range %}
-                        <li {% if no == page_no %}class="active" {% endif %}><a href="/page/{{ no }}">{{ no }}</a></li>
+                        <li {% if no == page_no %}class="active" {% endif %}><a
+                                href="/{% block page_split %}page{% endblock %}/{{ no }}">{{ no }}</a></li>
                     {% endfor %}
                     {#                    <li>#}
                     {#                        <a href="#" aria-label="Next">#}

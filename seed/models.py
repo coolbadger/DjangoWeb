@@ -9,6 +9,8 @@ from django.db import models
 class Series(models.Model):
     name = models.CharField(max_length=1023)
     series_url = models.TextField()
+
+    image_url = models.CharField(max_length=255, null=True)
     check_date = models.DateTimeField(null=True)
     pass
 
