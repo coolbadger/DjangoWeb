@@ -87,8 +87,11 @@ def process_task(movie_url, movie_context):
                         + '">[\s|\S]{70,80}<img src="(https://.{4,64}/thumb\w{0,1}/[\w|\.]{1,16})"'
         url = search_str(movie_img_url, movie_context)
         new_movie.movie_img_url = url
-        if len(str(url)) > 4:
-            new_movie.series.image_url = url
+        serie = new_movie.series
+        if len(str(url)) > 4 & serie:
+            if not serie.image_url:
+                serie.image_url = url
+                print 'Serie image added: ' + url
         new_movie.save()
         print new_movie.movie_img_url + " preview image saved."
     print str(result_msg.procced_count) + "/" + str(result_msg.total_count) + " end\n"
