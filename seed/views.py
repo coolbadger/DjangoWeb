@@ -24,6 +24,8 @@ def default(request):
     checked_actor_count = result_obj.count()
     movie_count = models.Movie.objects.count()
     magnet_count = models.Magnet.objects.count()
+    series_count = series_result.count()
+    checked_series_count = series_result.exclude(check_date=None).count()
 
     total_page = result_obj.count() / 30 - 1
 
@@ -118,12 +120,11 @@ def series_page(request, page_no):
     series_count = series_result.count()
     checked_series_count = series_result.exclude(check_date=None).count()
 
-    # for se in series_result:
-    #     if not se.image_url:
-    #         mv = models.Movie.objects.filter(series=se, movie_img_url__contains='.').first()
-    #         if mv:
-    #             se.image_url = mv.movie_img_url
-    #             se.save()
+    for se in series_result:
+        if not se.image_url:
+            mv = models.Movie.objects.filter(series=se, movie_img_url__contains='.').first()
+            if mv:
+                se.image_url = mv.movie_img_url
 
     total_page = series_result.count() / page_count
     page_range = []
@@ -137,7 +138,7 @@ def series_page(request, page_no):
     for i in range(max(page_no - 2, 1), min(max(page_no - 2, 1) + 5, total_page)):
         page_range.append(i)
 
-    table_result = series_result[
+    table_result = series_result.order_by('-check_date')[
                    page_no * page_count - page_count:page_no * page_count]
 
     resp_data = dict(table.table_date(table_result, page_no, page_range).items() +
@@ -166,8 +167,9 @@ def series_resource(request, serie):
     for mv in mv_results:
         movies.append(mv)
         mm = models.Magnet.objects.filter(movie=mv).first()
-        extra_data.append(mm.magnet_url)
-        sum_str += mm.magnet_url + '<br/>'
+        if mm:
+            extra_data.append(mm.magnet_url)
+            sum_str += mm.magnet_url + '<br/>'
 
     count = str(mv_results.count()) + " / " + str(len(extra_data))
     resp = render_to_response('seed/series_resource.html',

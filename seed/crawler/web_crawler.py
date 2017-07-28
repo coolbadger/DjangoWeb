@@ -20,6 +20,7 @@ def web_content(request_url, *data):
     login_request = urllib2.Request(request_url, data)
     login_request.add_header('User-Agent', user_agent)
     login_request.add_header('referer', 'https://www.seedmm.com/')
+    login_request.add_header('cookie', 'existmag=all')
 
     need_info = True
 
