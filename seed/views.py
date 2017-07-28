@@ -13,7 +13,7 @@ from component import table
 task = threading.Thread(target=process.update_all)
 
 result_obj = models.Actors.objects.filter(image_url__contains='.jpg').exclude(check_date=None)
-series_result = models.Series.objects.filter()
+series_result = models.Series.objects.filter().order_by('-check_date')
 
 
 def default(request):
@@ -118,11 +118,12 @@ def series_page(request, page_no):
     series_count = series_result.count()
     checked_series_count = series_result.exclude(check_date=None).count()
 
-    for se in series_result:
-        if not se.image_url:
-            mv = models.Movie.objects.filter(series=se, movie_img_url__contains='.').first()
-            if mv:
-                se.image_url = mv.movie_img_url
+    # for se in series_result:
+    #     if not se.image_url:
+    #         mv = models.Movie.objects.filter(series=se, movie_img_url__contains='.').first()
+    #         if mv:
+    #             se.image_url = mv.movie_img_url
+    #             se.save()
 
     total_page = series_result.count() / page_count
     page_range = []

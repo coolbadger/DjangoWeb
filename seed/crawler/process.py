@@ -56,7 +56,7 @@ def update_by_actors():
 
 def update_by_series():
     for serie in models.Series.objects.filter(check_date=None):
-        url = serie.actor_url + r'/'
+        url = serie.series_url + r'/'
         craw(url)
         serie.check_date = datetime.datetime.now().replace(tzinfo=utc)
         serie.save()
@@ -91,7 +91,7 @@ def update_all():
     while process_continue:
         times += 1
         try:
-            update_by_actors()
+            update_by_series()
         except Exception as e:
             print str(e)
             print "something is not good for " + str(times) + " times."
