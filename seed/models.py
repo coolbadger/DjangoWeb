@@ -12,6 +12,7 @@ class Series(models.Model):
 
     image_url = models.CharField(max_length=255, null=True)
     check_date = models.DateTimeField(null=True)
+    check_error = models.BooleanField(default=False)
     pass
 
 
@@ -58,6 +59,7 @@ class Actors(models.Model):
     hobby = models.CharField(max_length=50, null=True)
     uncensored = models.CharField(max_length=2, default='n')
     check_date = models.DateTimeField(null=True)
+    check_error = models.BooleanField(default=False)
 
     pass
 
