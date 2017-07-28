@@ -47,20 +47,29 @@ def craw(target_url):
 
 
 def update_by_actors():
-    for actor in models.Actors.objects.filter(check_date=None):
-        url = actor.actor_url + r'/'
-        craw(url)
+    for actor in models.Actors.objects.filter(check_date=None, check_error=False):
+
+        try:
+            url = actor.actor_url + r'/'
+            craw(url)
+        except Exception as e:
+            actor.check_error = True
         actor.check_date = datetime.datetime.now().replace(tzinfo=utc)
         actor.save()
     return const.CRAW_FINISH
 
+
 def update_by_series():
-    for serie in models.Series.objects.filter(check_date=None):
+    for serie in models.Series.objects.filter(check_date=None, check_error=False):
         url = serie.series_url + r'/'
-        craw(url)
+        try:
+            craw(url)
+        except Exception as e:
+            serie.check_error = True
         serie.check_date = datetime.datetime.now().replace(tzinfo=utc)
         serie.save()
     return const.CRAW_FINISH
+
 
 def update_uncensored():
     url = r'https://www.seedmm.com/uncensored/page/'
@@ -76,18 +85,6 @@ def update_censored():
 
 def update_all():
     times = 0
-    # update_by_actors()
-    # try:
-    #     update_censored()
-    # except Exception as e:
-    #     print str(e)
-    #
-    # try:
-    #     update_uncensored()
-    # except Exception as e:
-    #     print str(e)
-
-
     while process_continue:
         times += 1
         try:
