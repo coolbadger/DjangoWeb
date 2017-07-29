@@ -1,0 +1,17 @@
+<div class="thumbnail">
+    <img src="{{ row.image_url }}" alt=""
+         title="{% trans 'Open resource:' %}" onclick="window.open('/seed/actor/{{ row.id }}')"
+         class="img-rounded link"
+         width="100%">
+    <div class="caption"><h3>{{ row.name }}</h3>
+        <p>{% if row.uncensored == 'y' %}{% trans 'Uncensored' %}{% else %}
+            {% trans 'Censored' %}{% endif %}</p>
+        <p>{{ row.check_date }}</p>
+        <p>
+            <a href="{{ row.actor_url }}" target="_blank" class="btn btn-primary btn-sm"
+               role="button">{% trans 'Details' %}</a>
+            <a href="/seed/actor/{{ row.id }}" target="_blank" class="btn btn-default btn-sm"
+               role="button">{% trans 'Resources' %}</a>
+        </p>
+    </div>
+</div>

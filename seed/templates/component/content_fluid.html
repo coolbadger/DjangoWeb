@@ -1,44 +1,4 @@
 {% load i18n %}
-{% block nav_bar %}
-    <div class="nav">
-        <div class="col-md-4">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li>
-                        <a href="/{% block page_split_1 %}seed/actor_page{% endblock %}/1" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% for no in page_range %}
-                        <li {% if no == page_no %}class="active" {% endif %}><a
-                                href="/{% block page_split_2 %}seed/actor_page{% endblock %}/{{ no }}">{{ no }}</a></li>
-                    {% endfor %}
-                    {#                    <li>#}
-                    {#                        <a href="#" aria-label="Next">#}
-                    {#                            <span aria-hidden="true">Have More</span>#}
-                    {#                        </a>#}
-                    {#                    </li>#}
-                </ul>
-            </nav>
-        </div>
-        <div class="col-md-8 nav text-center">
-            <div>
-                <br>
-                <span class="label label-default">{% trans 'ActorsCount: ' %}{{ actor_count }}</span>
-                <span class="label label-primary">{% trans 'CheckedActorsCount: ' %}{{ checked_actor_count }}</span>
-                <span class="label label-success">{% trans 'PageCount: ' %}{{ total_page }}</span>
-                <span class="label label-info">{% trans 'MovieCount: ' %}{{ movie_count }}</span>
-                <span class="label label-warning">{% trans 'ResourceCount: ' %}{{ magnet_count }}</span>
-                <span class="label label-default">{% trans 'SeriesCount: ' %}{{ series_count }}</span>
-                <span class="label label-primary">{% trans 'CheckedSeriesCount: ' %}{{ checked_series_count }}</span>
-            </div>
-        </div>
-        {##}
-        {#        <div class="col-sm-4">#}
-        {#            </br><a href="/seed/process_start">{% trans 'Start Process' %}</a>#}
-        {#        </div>#}
-    </div>
-{% endblock %}
 <div class="masonry-container">
     {% for row in table_result %}
         <div class="col-sm-4 col-md-3 col-lg-2 item">

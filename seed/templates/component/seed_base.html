@@ -1,33 +1,73 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}{% trans 'SeedIndex' %}{% endblock %}
+{% block extrastyle %}
+    <style>
+        body {
+            padding-top: 70px;
+        }
+
+        .page_pad {
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
+
+        .info_pad {
+            padding: 0px;
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+{% endblock %}
 {% block body %}
-    {#    <div>#}
-    {#        <a href="/seed/process_start">process_start</a>#}
-    {#        <a href="/seed/series_page/1">series_page</a>#}
-    {#    </div>#}
-    <div>
-        <nav class="navbar navbar-default navbar-static-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">{% trans "SeedIndex" %}</a>
-                </div>
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="/seed/actor_page/">{% trans "Actors" %}</a></li>
-                        <li><a href="/seed/series_page/">{% trans "Series" %}</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {% trans "Process" %} <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/seed/process_start">{% trans "Start" %}</a></li>
-                                <li><a href="#">{% trans "Stop" %}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header col-md-2">
+                <a class="navbar-brand" href="/">{% trans "SeedIndex" %}</a>
             </div>
-        </nav>
+            <div class="col-md-6">
+                <ul class="nav navbar-nav">
+                    <li{% if actor_active %} class="active"{% endif %}><a
+                            href="/seed/actor_page/">{% trans "Actors" %}</a></li>
+                    <li{% if series_active %} class="active"{% endif %}><a
+                            href="/seed/series_page/">{% trans "Series" %}</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {% trans "Process" %} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/seed/process_start">{% trans "Start" %}</a></li>
+                            <li><a href="#">{% trans "Stop" %}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <nav>
+                    <ul class="pagination pagination-sm page_pad">
+                        <li>
+                            <a href="{{ page_base_url }}/1" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% for no in page_range %}
+                            <li {% if no == page_no %}class="active" {% endif %}><a
+                                    href="{{ page_base_url }}/{{ no }}">{{ no }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </nav>
+
+    <div class="nav text-center info_pad">
+        <span class="label label-default">{% trans 'ActorsCount: ' %}{{ actor_count }}</span>
+        <span class="label label-primary">{% trans 'CheckedActorsCount: ' %}{{ checked_actor_count }}</span>
+        <span class="label label-success">{% trans 'PageCount: ' %}{{ total_page }}</span>
+        <span class="label label-info">{% trans 'MovieCount: ' %}{{ movie_count }}</span>
+        <span class="label label-warning">{% trans 'ResourceCount: ' %}{{ magnet_count }}</span>
+        <span class="label label-default">{% trans 'SeriesCount: ' %}{{ series_count }}</span>
+        <span class="label label-primary">{% trans 'CheckedSeriesCount: ' %}{{ checked_series_count }}</span>
     </div>
 {% endblock %}

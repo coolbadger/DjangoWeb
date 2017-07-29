@@ -1,1 +1,1 @@
-{% extends 'component/seed_base.html' %}{% load i18n %}{% block title %}{% trans 'SeedIndex' %}{% endblock %}{% block body %}    {{ block.super }}    {% include 'seed/movie_fluid.html' %}{% endblock %}
+{% extends 'component/seed_base.html' %}{% load i18n %}{% block title %}{% trans 'SeedIndex' %}{% endblock %}{% block body %}    <div class="container">        {% with page_base_url="/seed/actor_page" moive_active='true' %}            {{ block.super }}        {% endwith %}        {% include 'seed/movie_fluid.html' %}    </div>{% endblock %}

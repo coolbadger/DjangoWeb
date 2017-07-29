@@ -2,7 +2,11 @@
 {% load i18n %}
 {% block title %}{% trans 'SeedIndex' %}{% endblock %}
 {% block body %}
-    {{ block.super }}
-    {% include 'seed/actor_fluid.html' %}
+    <div class="container">
+        {% with page_base_url="/seed/actor_page" actor_active='true' %}
+            {{ block.super }}
+        {% endwith %}
+        {% include 'seed/actor_fluid.html' %}
+    </div>
 {% endblock %}
 
