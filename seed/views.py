@@ -19,7 +19,7 @@ series_result = models.Series.objects.filter().order_by('-check_date')
 def default(request):
     page_no = 1
     page_range = range(1, 6)
-    table_result = result_obj[:30]
+    table_result = result_obj.order_by('-check_date')[:30]
     actor_count = models.Actors.objects.count()
     checked_actor_count = result_obj.count()
     movie_count = models.Movie.objects.count()
@@ -55,7 +55,7 @@ def page(request, page_no):
     for i in range(max(page_no - 2, 1), min(max(page_no - 2, 1) + 5, total_page)):
         page_range.append(i)
 
-    table_result = result_obj[
+    table_result = result_obj.order_by('-check_date')[
                    page_no * page_count - page_count:page_no * page_count]
 
     resp_data = dict(table.table_date(table_result, page_no, page_range).items() +

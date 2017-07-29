@@ -5,13 +5,13 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li>
-                        <a href="/page/1" aria-label="Previous">
+                        <a href="/{% block page_split_1 %}page{% endblock %}/1" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     {% for no in page_range %}
                         <li {% if no == page_no %}class="active" {% endif %}><a
-                                href="/{% block page_split %}page{% endblock %}/{{ no }}">{{ no }}</a></li>
+                                href="/{% block page_split_2 %}page{% endblock %}/{{ no }}">{{ no }}</a></li>
                     {% endfor %}
                     {#                    <li>#}
                     {#                        <a href="#" aria-label="Next">#}
