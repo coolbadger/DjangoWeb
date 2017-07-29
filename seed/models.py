@@ -9,6 +9,7 @@ from django.db import models
 class Series(models.Model):
     name = models.CharField(max_length=1023)
     series_url = models.TextField()
+    movie_count = models.IntegerField(default=0)
 
     image_url = models.CharField(max_length=255, null=True)
     check_date = models.DateTimeField(null=True)
@@ -35,6 +36,8 @@ class Movie(models.Model):
     img = models.CharField(max_length=255)
 
     mag_count = models.IntegerField(default=0)
+    actor_count = models.IntegerField(default=0)
+    tag_count = models.IntegerField(default=0)
 
     pass
 
@@ -42,6 +45,8 @@ class Movie(models.Model):
 class Tag(models.Model):
     name = models.TextField()
     tag_url = models.TextField()
+
+    movie_count = models.IntegerField(default=0)
 
     pass
 
@@ -62,6 +67,8 @@ class Actors(models.Model):
     uncensored = models.CharField(max_length=2, default='n')
     check_date = models.DateTimeField(null=True)
     check_error = models.BooleanField(default=False)
+
+    movie_count = models.IntegerField(default=0)
 
     pass
 
