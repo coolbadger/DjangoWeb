@@ -34,6 +34,8 @@ class Movie(models.Model):
     uc = models.CharField(max_length=2)
     img = models.CharField(max_length=255)
 
+    mag_count = models.IntegerField(default=0)
+
     pass
 
 

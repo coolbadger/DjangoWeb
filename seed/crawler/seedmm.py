@@ -247,6 +247,8 @@ def get_magnets(movie_info):
         magnets.size = line[2]
         magnets.share_date = line[3]
         magnets.save()
+        movie_info.mag_count += 1
+        movie_info.save()
         magnet_count += 1
         result_msg.resource_count += 1
         # for property, value in vars(magnets).iteritems():
