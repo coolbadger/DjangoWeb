@@ -28,6 +28,8 @@
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-nav">
+                    <li{% if movie_active %} class="active"{% endif %}><a
+                            href="/seed/">{% trans "Movies" %}</a></li>
                     <li{% if actor_active %} class="active"{% endif %}><a
                             href="/seed/actor_page/">{% trans "Actors" %}</a></li>
                     <li{% if series_active %} class="active"{% endif %}><a
@@ -64,7 +66,7 @@
     <div class="nav text-center info_pad">
         <span class="label label-default">{% trans 'ActorsCount: ' %}{{ actor_count }}</span>
         <span class="label label-primary">{% trans 'CheckedActorsCount: ' %}{{ checked_actor_count }}</span>
-        <span class="label label-success">{% trans 'PageCount: ' %}{{ total_page }}</span>
+{#        <span class="label label-success">{% trans 'PageCount: ' %}{{ total_page }}</span>#}
         <span class="label label-info">{% trans 'MovieCount: ' %}{{ movie_count }}</span>
         <span class="label label-warning">{% trans 'ResourceCount: ' %}{{ magnet_count }}</span>
         <span class="label label-default">{% trans 'SeriesCount: ' %}{{ series_count }}</span>

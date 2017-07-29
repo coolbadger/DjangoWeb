@@ -182,3 +182,24 @@ def series_resource(request, serie):
                                                                                'count': count,
                                                                                'sum_str': sum_str}.items()))
     return resp
+
+
+def movie(request, page_no):
+    if not page_no:
+        page_no = 1
+    page_no = int(page_no)
+
+    page_count = 30
+    page_range = range(1, 6)
+    table_result = models.Movie.objects.all()[
+                   page_no * page_count - page_count:page_no * page_count]
+    actor_count = models.Actors.objects.count()
+    checked_actor_count = result_obj.count()
+    movie_count = models.Movie.objects.count()
+    magnet_count = models.Magnet.objects.count()
+    series_count = series_result.count()
+    checked_series_count = series_result.exclude(check_date=None).count()
+
+    total_page = result_obj.count() / 30 - 1
+
+    return render_to_response('movies.html', locals())

@@ -9,7 +9,7 @@ from django.conf.urls import url, include
 from seed import views
 
 urlpatterns = [
-    url(r'^index/', views.default),
+    url(r'^(\d{0,10})$', views.movie),
     url(r'^actor/(\d{1,10})', views.actor_resource),
     url(r'^actor_page/(\d{0,10})', views.actors),
     url(r'^series/(\d{1,10})', views.series_resource),
