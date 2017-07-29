@@ -19,7 +19,7 @@ from seed import views as seed_view, urls as seed_urls
 
 urlpatterns = [
     url(r'^$', seed_view.default),
-    url(r'^page/(\d{0,5})', seed_view.page),
+    url(r'^page/(\d{0,5})', seed_view.actors),
     url(r'^admin/', admin.site.urls),
     url(r'^seed/', include(seed_urls.urlpatterns)),
 ]

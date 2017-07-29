@@ -19,7 +19,7 @@ series_result = models.Series.objects.filter().order_by('-check_date')
 def default(request):
     page_no = 1
     page_range = range(1, 6)
-    table_result = result_obj.order_by('-check_date')[:30]
+    table_result = models.Movie.objects.all()[:30]
     actor_count = models.Actors.objects.count()
     checked_actor_count = result_obj.count()
     movie_count = models.Movie.objects.count()
@@ -33,7 +33,7 @@ def default(request):
     return resp
 
 
-def page(request, page_no):
+def actors(request, page_no):
     if not page_no:
         page_no = 1
     page_no = int(page_no)
@@ -42,13 +42,15 @@ def page(request, page_no):
     checked_actor_count = result_obj.count()
     movie_count = models.Movie.objects.count()
     magnet_count = models.Magnet.objects.count()
+    series_count = series_result.count()
+    checked_series_count = series_result.exclude(check_date=None).count()
 
     total_page = result_obj.count() / page_count
     page_range = []
     print total_page
 
-    if page_no <= 1:
-        return HttpResponseRedirect('/')
+    if page_no < 1:
+        return HttpResponseRedirect('/page/1')
     elif page_no >= total_page:
         return HttpResponseRedirect('/page/' + str(total_page - 1))
 
@@ -62,8 +64,10 @@ def page(request, page_no):
                      {'actor_count': actor_count, 'total_page': total_page - 1,
                       'checked_actor_count': checked_actor_count,
                       'movie_count': movie_count,
-                      'magnet_count': magnet_count}.items())
-    resp = render_to_response('index.html', resp_data)
+                      'magnet_count': magnet_count,
+                      'series_count': series_count,
+                      'checked_series_count': checked_series_count, }.items())
+    resp = render_to_response('actors.html', resp_data)
     return resp
 
 

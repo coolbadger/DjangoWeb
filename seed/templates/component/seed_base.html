@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'SeedIndex' %}{% endblock %}
+{% block body %}
+    {#    <div>#}
+    {#        <a href="/seed/process_start">process_start</a>#}
+    {#        <a href="/seed/series_page/1">series_page</a>#}
+    {#    </div>#}
+    <div>
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">{% trans "SeedIndex" %}</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="/seed/actor_page/">{% trans "Actors" %}</a></li>
+                        <li><a href="/seed/series_page/">{% trans "Series" %}</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {% trans "Process" %} <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/seed/process_start">{% trans "Start" %}</a></li>
+                                <li><a href="#">{% trans "Stop" %}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+{% endblock %}
