@@ -96,8 +96,9 @@ def actor_resource(request, actor):
     for ma in ma_results:
         movies.append(ma.movie)
         mm = models.Magnet.objects.filter(movie=ma.movie).first()
-        extra_data.append(mm.magnet_url)
-        sum_str += mm.magnet_url + '<br/>'
+        if mm:
+            extra_data.append(mm.magnet_url)
+            sum_str += mm.magnet_url + '<br/>'
 
     count = str(ma_results.count()) + " / " + str(len(extra_data))
     resp = render_to_response('seed/actor_resource.html',
